@@ -7,15 +7,12 @@
 
 
 
-//VARIABLES ---------------------->
+//VARIABLES ---------------------------------------------------------------------------------->
 const buttonAskInfo = document.querySelector('#buttonAskInfo')
 const usersContainer = document.querySelector('#usersContainer')
 
 
-//Variable usuario mostrado
-const id = 10; //Se puede dinamizar (Math random?)
-let name;
-let email;
+
 
 //Array usuarios
 const arrayUsersName =[
@@ -32,42 +29,23 @@ const arrayUsersInfo =[
     { id: 5, email: "bea@email.com" },
 ]
 
+//Variable usuario mostrado
+const id = 1; //Dinamiza el index volviéndolo randomn. 
+
+
+//EVENTOS ----------------------------------------------------------------------------------->
+//Evento para generar la card al hacer click en el botón información del usuario
+buttonAskInfo.addEventListener("click", () => {
+    drawUserInfo(id);// se ejecuta la función con ese id
+});
 
 
 
 
-//EVENTOS ----------------------------------------------------------->
-buttonAskInfo.addEventListener("click", drawUserInfo)
 
+//FUNCIONES --------------------------------------------------------------------------------->
 
-
-//FUNCIONES --------------------------------------------------------->
-
-
-function drawUserInfo(){
-    //Card de usuario
-    const userCard = document.createElement('DIV');
-    userCard.classList.add("userCard")
-    //Lista de datos
-    const ulUserInfo = document.createElement('UL');
-    ulUserInfo.classList.add("userInfo")
-    //Datos
-    const liName = document.createElement('LI');
-    liName.classList.add("userLi")
-    liName.textContent = "nombre provisional" //Provisional
-
-    const liEmail = document.createElement('LI');
-    liEmail.classList.add("userLi")
-    liEmail.textContent = "email provisional" //Provisional
-
-    //Colocación
-    usersContainer.append(userCard)
-    userCard.append(ulUserInfo)
-    ulUserInfo.append(liName, liEmail)
-
-}
-
-
+//Funciones para conseguir nombre y email --------------------------------->
 //Función-promesa para conseguir el nombre
 function getUserName(id){
     const name = arrayUsersName.find((user) => user.id === id)?.name;
@@ -90,23 +68,63 @@ function getUserEmail(id){
 
 
 
+//Funciones para crear y pintar la card --------------------------------->
+//Función para crear la card
+function createUserCard(){
+    //Card de usuario
+    const userCard = document.createElement('DIV');
+    userCard.classList.add("userCard")
+    //Lista de datos
+    const ulUserInfo = document.createElement('UL');
+    ulUserInfo.classList.add("userInfo")
+    //Datos
+    const liName = document.createElement('LI');
+    liName.classList.add("userLi")
+    liName.textContent = " " 
+
+    const liEmail = document.createElement('LI');
+    liEmail.classList.add("userLi")
+    liEmail.textContent = " "
+
+    //Colocación
+    usersContainer.append(userCard)
+    userCard.append(ulUserInfo)
+    ulUserInfo.append(liName, liEmail)
+
+    return {liName, liEmail} //Desestructuración del objeto
+}
+
+
+
+//Función para pintar la card con el contenido del array
+function drawUserInfo(id) {
+  usersContainer.innerHTML = "";
+  const { liName, liEmail } = createUserCard();
+
+    getUserName(id)
+        .then((nameResult) => {
+        name = nameResult;
+        liName.textContent = `Nombre: ${name}`;
+        })
+        .catch((error) => {
+        liName.textContent = "Nombre no disponible";
+        console.error(`${error}`);
+        });
+
+    getUserEmail(id)
+        .then((emailResult) => {
+        email = emailResult;
+        liEmail.textContent = `Email: ${email}`;
+        })
+        .catch((error) => {
+        liEmail.textContent = "Email: no disponible";
+        console.error(`${error}`);
+        });
+}
+
+
+
+
+
 
 //INVOCACIONES ------------------------------------------------------>
-
-getUserName(id)
-  .then((nameResult) => { 
-    name = nameResult;//Devuelve el nombre
-    return getUserEmail(id); //Este return inicia la siguiente promesa
-  })
-
-  .then((emailResult) => {
-    email = emailResult;//Devuelve el email
-    console.log(
-      `El alumno con id ${id} se llama ${name} y su email es ${email}`//Muestra el mensaje en consola
-    );
-  })
-  
-  .catch((error) => {
-    console.log(`ERROR: ${error}`);
-  });
-
