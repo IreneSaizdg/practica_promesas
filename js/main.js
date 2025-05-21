@@ -21,18 +21,52 @@ const arrayUsersName =[
     { id: 5, name: "bea" },
 ]
 
-const arrayUsersEmail =[
+const arrayUsersInfo =[
     { id: 1, email: "pepe@email.com" },
     { id: 2, email: "ana@email.com" },
     { id: 5, email: "bea@email.com" },
 ]
 
 
+//Variable Usuario Mostrado
+const id = 5; //Se puede dinamizar (Math random?)
+let name;
+let email;
 
 
-//EVENTOS ------------------------>
+//EVENTOS ----------------------------------------------------------->
+buttonAskInfo.addEventListener("click", drawUserInfo)
 
 
 
-//FUNCIONES ---------------------->
+//FUNCIONES --------------------------------------------------------->
+
+//Función-promesa para conseguir la info de usuario (después pintarla)
+function getUserInfo(){
+    //reoge toda la info (getUserName & getUserEmail)
+}
+
+//Función-promesa para conseguir el nombre
+function getUserName(id){
+    console.log("Nombre de usuario")
+};
+
+
+//Función-promesa para conseguir el email
+function getUserEmail(id){
+    console.log("Email de usuario")
+}
+
+
+
+//Función pintar información de usuario
+function drawUserInfo(){
+    console.log("Esto mostrará los datos de usuario al clickar")
+}
+
+
+
+//INVOCACIONES ------------------------------------------------------>
+
+
 
