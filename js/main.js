@@ -43,6 +43,31 @@ buttonAskInfo.addEventListener("click", drawUserInfo)
 
 //FUNCIONES --------------------------------------------------------->
 
+
+function drawUserInfo(){
+    //Card de usuario
+    const userCard = document.createElement('DIV');
+    userCard.classList.add("userCard")
+    //Lista de datos
+    const ulUserInfo = document.createElement('UL');
+    ulUserInfo.classList.add("userInfo")
+    //Datos
+    const liName = document.createElement('LI');
+    liName.classList.add("userLi")
+    liName.textContent = "nombre provisional" //Provisional
+
+    const liEmail = document.createElement('LI');
+    liEmail.classList.add("userLi")
+    liEmail.textContent = "email provisional" //Provisional
+
+    //Colocación
+    usersContainer.append(userCard)
+    userCard.append(ulUserInfo)
+    ulUserInfo.append(liName, liEmail)
+
+}
+
+
 //Función-promesa para conseguir el nombre
 function getUserName(id){
     const name = arrayUsersName.find((user) => user.id === id)?.name;
