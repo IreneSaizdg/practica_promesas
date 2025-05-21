@@ -59,6 +59,9 @@ buttonAskInfo.addEventListener("click", () => { //recibe una función con varias
 
 
 
+
+
+
 //FUNCIONES --------------------------------------------------------------------------------->
 //Función generar un index randomn
 function getRandomUserId() {
@@ -111,12 +114,12 @@ function createUserCard(){
     //Datos
     const liName = document.createElement('LI');
     liName.classList.add("userLi")
-    liName.textContent = ""
+    liName.textContent = "Cargando nombre..."
 
 
     const liEmail = document.createElement('LI');
     liEmail.classList.add("userLi")
-    liEmail.textContent = ""
+    liEmail.textContent = "Cargando email..."
 
 
     //Colocación
@@ -138,28 +141,31 @@ function drawUserInfo(id) {
   usersContainer.innerHTML = "";
   const { liName, liEmail } = createUserCard();
 
-    getUserName(id)
-        .then((nameResult) => {
-        name = nameResult;
-        liName.textContent = `Nombre: ${name}`;
-        })
-        .catch((error) => {
-        liName.textContent = "Nombre no disponible";
-        console.error(`${error}`);
-        });
 
 
-    getUserEmail(id)
-        .then((emailResult) => {
-        email = emailResult;
-        liEmail.textContent = `Email: ${email}`;
-        })
-        .catch((error) => {
-        liEmail.textContent = "Email: no disponible";
-        console.error(`${error}`);
-        });
+
+    setTimeout(() => {
+        getUserName(id)
+            .then((nameResult) => {
+            name = nameResult;
+            liName.textContent = `Nombre: ${name}`;
+            })
+            .catch((error) => {
+            liName.textContent = "Nombre no disponible";
+            console.error(`${error}`);
+            });
+
+
+        getUserEmail(id)
+            .then((emailResult) => {
+            email = emailResult;
+            liEmail.textContent = `Email: ${email}`;
+            })
+            .catch((error) => {
+            liEmail.textContent = "Email: no disponible";
+            console.error(`${error}`);
+            });
+
+
+    },2000); //añade 2 segundos (2000ms) de retardo.
 }
-
-
-
-//INVOCACIONES ------------------------------------------------------>
